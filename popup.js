@@ -100,30 +100,36 @@ async function fetchIP() {
   }
 }
 
-// Copy to clipboard
-document.getElementById('copy-btn').addEventListener('click', async () => {
-  const ipText = document.getElementById('ip-value').textContent;
-  if (!ipText || ipText === 'LOCATING...' || ipText === 'CONNECTION FAILED' || ipText === 'NETWORK ERROR') return;
+// Copy to clipboard helper
+function setupCopyButton(btnId, valueId, label) {
+  document.getElementById(btnId).addEventListener('click', async () => {
+    const ipText = document.getElementById(valueId).textContent;
+    const invalid = ['LOCATING...', 'CONNECTION FAILED', 'NETWORK ERROR', 'NOT AVAILABLE'];
+    if (!ipText || invalid.includes(ipText)) return;
 
-  try {
-    await navigator.clipboard.writeText(ipText);
-    const btn = document.getElementById('copy-btn');
+    try {
+      await navigator.clipboard.writeText(ipText);
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = ipText;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+
+    const btn = document.getElementById(btnId);
     btn.textContent = '✓ COPIED';
     btn.classList.add('copied');
     setTimeout(() => {
-      btn.textContent = '⎘ COPY';
+      btn.textContent = `⎘ COPY ${label}`;
       btn.classList.remove('copied');
     }, 1500);
-  } catch {
-    // Fallback for older browsers
-    const ta = document.createElement('textarea');
-    ta.value = ipText;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-  }
-});
+  });
+}
+
+setupCopyButton('copy-v4-btn', 'ip-value', 'IPv4');
+setupCopyButton('copy-v6-btn', 'ipv6-value', 'IPv6');
 
 // Initialize
 initMatrixRain();

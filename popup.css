@@ -100,10 +100,18 @@ body {
   animation: revealGlow 0.6s ease-out forwards;
 }
 
+/* Button row */
+.btn-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
 /* Copy button */
 .copy-btn {
+  flex: 1;
   margin-top: 2px;
-  padding: 8px 24px;
+  padding: 8px 12px;
   background: transparent;
   border: 1px solid rgba(0, 255, 65, 0.4);
   border-radius: 3px;
