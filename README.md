@@ -4,6 +4,8 @@ A lightweight Chrome/Edge extension that displays your current public IP address
 
 ![Matrix Style](https://img.shields.io/badge/style-matrix-00ff41?style=flat&labelColor=0a0a0a)
 ![Manifest V3](https://img.shields.io/badge/manifest-v3-blue)
+![Screenshot](screenshots/screenshot.png)
+
 ## Features
 
 - **IPv4 & IPv6** — shows both addresses side by side
