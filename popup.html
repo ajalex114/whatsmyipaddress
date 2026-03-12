@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What's My IP</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <canvas id="matrix-bg"></canvas>
+  <div class="container">
+    <h1 class="title">WHAT'S MY IP</h1>
+    <div class="ip-display">
+      <div id="ip-label" class="label">IPv4</div>
+      <div id="ip-value" class="ip-value loading">LOCATING...</div>
+    </div>
+    <div class="ip-display">
+      <div id="ipv6-label" class="label">IPv6</div>
+      <div id="ipv6-value" class="ip-value loading">LOCATING...</div>
+    </div>
+    <button id="copy-btn" class="copy-btn" title="Copy IPv4">&#x2398; COPY</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
