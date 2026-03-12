@@ -1,17 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-
+/* System monospace stack — no external font requests needed */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+:root {
+  --matrix-green: #00ff41;
+  --matrix-green-dim: #00cc33;
+  --matrix-green-glow: rgba(0, 255, 65, 0.5);
+  --matrix-bg: #0a0a0a;
+  --matrix-error: #ff3333;
+  --font-stack: 'Cascadia Mono', 'Consolas', 'SF Mono', 'Fira Code', 'Courier New', monospace;
+}
+
 body {
   width: 340px;
   height: 320px;
-  background: #0a0a0a;
-  font-family: 'Share Tech Mono', 'Courier New', monospace;
-  color: #00ff41;
+  background: var(--matrix-bg);
+  font-family: var(--font-stack);
+  color: var(--matrix-green);
   overflow: hidden;
   position: relative;
 }
@@ -43,11 +51,11 @@ body {
 .title {
   font-size: 18px;
   letter-spacing: 6px;
-  color: #00ff41;
+  color: var(--matrix-green);
   text-shadow:
-    0 0 7px #00ff41,
-    0 0 20px #00ff41,
-    0 0 40px #00c834;
+    0 0 7px var(--matrix-green),
+    0 0 20px var(--matrix-green),
+    0 0 40px var(--matrix-green-dim);
   text-align: center;
   animation: flicker 4s infinite alternate;
 }
@@ -65,7 +73,7 @@ body {
 .label {
   font-size: 10px;
   letter-spacing: 3px;
-  color: #00cc33;
+  color: var(--matrix-green-dim);
   opacity: 0.7;
   margin-bottom: 4px;
   text-transform: uppercase;
@@ -74,10 +82,10 @@ body {
 .ip-value {
   font-size: 20px;
   letter-spacing: 2px;
-  color: #00ff41;
+  color: var(--matrix-green);
   text-shadow:
-    0 0 5px #00ff41,
-    0 0 15px rgba(0, 255, 65, 0.5);
+    0 0 5px var(--matrix-green),
+    0 0 15px var(--matrix-green-glow);
   word-break: break-all;
   min-height: 26px;
   display: flex;
@@ -91,9 +99,14 @@ body {
 }
 
 .ip-value.error {
-  color: #ff3333;
-  text-shadow: 0 0 5px #ff3333;
+  color: var(--matrix-error);
+  text-shadow: 0 0 5px var(--matrix-error);
   font-size: 13px;
+}
+
+.ip-value.unavailable {
+  opacity: 0.4;
+  font-size: 12px;
 }
 
 .ip-value.revealed {
@@ -115,30 +128,41 @@ body {
   background: transparent;
   border: 1px solid rgba(0, 255, 65, 0.4);
   border-radius: 3px;
-  color: #00ff41;
-  font-family: 'Share Tech Mono', 'Courier New', monospace;
+  color: var(--matrix-green);
+  font-family: var(--font-stack);
   font-size: 12px;
   letter-spacing: 3px;
   cursor: pointer;
   transition: all 0.2s ease;
-  text-shadow: 0 0 4px #00ff41;
+  text-shadow: 0 0 4px var(--matrix-green);
 }
 
-.copy-btn:hover {
+.copy-btn:hover:not(:disabled) {
   background: rgba(0, 255, 65, 0.1);
-  border-color: #00ff41;
+  border-color: var(--matrix-green);
   box-shadow:
     0 0 8px rgba(0, 255, 65, 0.3),
     inset 0 0 8px rgba(0, 255, 65, 0.1);
 }
 
-.copy-btn:active {
+.copy-btn:active:not(:disabled) {
   transform: scale(0.97);
+}
+
+.copy-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+  text-shadow: none;
+}
+
+.copy-btn:focus-visible {
+  outline: 2px solid var(--matrix-green);
+  outline-offset: 2px;
 }
 
 .copy-btn.copied {
   color: #ffffff;
-  border-color: #00ff41;
+  border-color: var(--matrix-green);
   background: rgba(0, 255, 65, 0.2);
 }
 
@@ -157,16 +181,24 @@ body {
 @keyframes revealGlow {
   0% {
     opacity: 0;
-    text-shadow: 0 0 30px #00ff41;
+    text-shadow: 0 0 30px var(--matrix-green);
     filter: blur(4px);
   }
   50% {
     opacity: 1;
-    text-shadow: 0 0 20px #00ff41, 0 0 40px #00ff41;
+    text-shadow: 0 0 20px var(--matrix-green), 0 0 40px var(--matrix-green);
   }
   100% {
     opacity: 1;
-    text-shadow: 0 0 5px #00ff41, 0 0 15px rgba(0, 255, 65, 0.5);
+    text-shadow: 0 0 5px var(--matrix-green), 0 0 15px var(--matrix-green-glow);
     filter: blur(0);
   }
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .title { animation: none; }
+  .ip-value.loading { animation: none; opacity: 0.6; }
+  .ip-value.revealed { animation: none; opacity: 1; filter: none; }
+  #matrix-bg { display: none; }
 }

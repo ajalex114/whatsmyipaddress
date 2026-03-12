@@ -7,22 +7,22 @@
   <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
-  <canvas id="matrix-bg"></canvas>
-  <div class="container">
+  <canvas id="matrix-bg" aria-hidden="true"></canvas>
+  <main class="container" role="main">
     <h1 class="title">WHAT'S MY IP</h1>
-    <div class="ip-display">
+    <div class="ip-display" role="region" aria-labelledby="ip-label">
       <div id="ip-label" class="label">IPv4</div>
-      <div id="ip-value" class="ip-value loading">LOCATING...</div>
+      <div id="ip-value" class="ip-value loading" aria-live="polite">LOCATING...</div>
     </div>
-    <div class="ip-display">
+    <div class="ip-display" role="region" aria-labelledby="ipv6-label">
       <div id="ipv6-label" class="label">IPv6</div>
-      <div id="ipv6-value" class="ip-value loading">LOCATING...</div>
+      <div id="ipv6-value" class="ip-value loading" aria-live="polite">LOCATING...</div>
     </div>
     <div class="btn-row">
-      <button id="copy-v4-btn" class="copy-btn" title="Copy IPv4">⎘ COPY IPv4</button>
-      <button id="copy-v6-btn" class="copy-btn" title="Copy IPv6">⎘ COPY IPv6</button>
+      <button id="copy-v4-btn" class="copy-btn" disabled aria-label="Copy IPv4 address">⎘ COPY IPv4</button>
+      <button id="copy-v6-btn" class="copy-btn" disabled aria-label="Copy IPv6 address">⎘ COPY IPv6</button>
     </div>
-  </div>
+  </main>
   <script src="popup.js"></script>
 </body>
 </html>
